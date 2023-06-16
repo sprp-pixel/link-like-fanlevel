@@ -46,10 +46,16 @@ export const store = createStore<FanlevelState>({
     getExp: (state) => (member: string) => {
       return state.fanLevelsCurrent[member as keyof typeof Member].exp;
     },
+    getRequiredExp: (state) => (target: number) => {
+      const n = target - 1;
+      return (n / 2) * (2 * 200 + (n - 1) * 120);
+    },
   },
   mutations: {
-    setLv(state, { member, lv, exp }) {
+    setLv(state, { member, lv }) {
       state.fanLevelsCurrent[member as keyof typeof Member].lv = lv;
+    },
+    setExp(state, { member, exp }) {
       state.fanLevelsCurrent[member as keyof typeof Member].exp = exp;
     },
   },

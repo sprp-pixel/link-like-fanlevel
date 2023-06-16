@@ -1,8 +1,18 @@
 <template>
-  <div>
+  <div class="box-fanlevel">
     <div>{{ member }}</div>
-    <div>Season fan Lv.<input :value="getLv" @keydown="setLv" /></div>
-    <div>EXP <input :value="getExp" /></div>
+    <div>
+      Season fan Lv.<input
+        class="input-fanlv"
+        type="number"
+        :value="getLv"
+        @change="setLv"
+      />
+    </div>
+    <div>
+      EXP
+      <input class="input-exp" type="number" :value="getExp" @change="setExp" />
+    </div>
   </div>
 </template>
 
@@ -25,15 +35,39 @@ export default defineComponent({
       store.commit("setLv", {
         member: props.member,
         lv: Number(event.target.value),
-        exp: 2,
       });
-      console.log(event);
+    };
+    const setExp = (event: { target: { value: string } }) => {
+      store.commit("setExp", {
+        member: props.member,
+        exp: Number(event.target.value),
+      });
     };
     return {
       getLv,
       getExp,
       setLv,
+      setExp,
     };
   },
 });
 </script>
+
+<style>
+.box-fanlevel {
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  max-width: 250px;
+  margin: 2px;
+}
+.input-fanlv {
+  width: 2.5em;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+.input-exp {
+  width: 5em;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+</style>
