@@ -1,6 +1,6 @@
 <template>
   <div class="box-fanlevel">
-    <div>{{ member }}</div>
+    <div>{{ memberObj[member].name }}</div>
     <div>
       Season fan Lv.<input
         class="input-fanlv"
@@ -19,6 +19,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../store";
+import { Member } from "../constants/const-members";
 
 export default defineComponent({
   name: "FanLevelCard",
@@ -43,11 +44,13 @@ export default defineComponent({
         exp: Number(event.target.value),
       });
     };
+    const memberObj = Member;
     return {
       getLv,
       getExp,
       setLv,
       setExp,
+      memberObj,
     };
   },
 });
