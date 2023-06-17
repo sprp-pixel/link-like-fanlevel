@@ -1,6 +1,6 @@
 <template>
   <div class="box-fanlevel">
-    <div>{{ member }}</div>
+    <div>{{ memberObj[member].name }}</div>
     <div>
       Target fan Lv.<input
         class="input-fanlv"
@@ -17,6 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { useStore } from "../store";
+import { Member } from "../constants/const-members";
 
 export default defineComponent({
   name: "TargetLevelCard",
@@ -34,10 +35,12 @@ export default defineComponent({
     const getRemainedExp = computed(() =>
       Math.max(getRequiredExps.value - getExp.value, 0)
     );
+    const memberObj = Member;
     return {
       getRequiredExps,
       getRemainedExp,
       targetLv,
+      memberObj,
     };
   },
 });
