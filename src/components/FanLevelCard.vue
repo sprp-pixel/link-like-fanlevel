@@ -1,17 +1,10 @@
 <template>
   <div class="box-fanlevel">
-    <div>{{ memberObj[member].name }}</div>
-    <div>
-      Season fan Lv.<input
-        class="input-fanlv"
-        type="number"
-        :value="getLv"
-        @change="setLv"
-      />
-    </div>
+    <div>{{ memberName }}</div>
+    <div>Season fan Lv.<input class="input-fanlv" v-model="fanLevel" /></div>
     <div>
       EXP
-      <input class="input-exp" type="number" :value="getExp" @change="setExp" />
+      <input class="input-exp" type="number" v-model="exp" />
     </div>
   </div>
 </template>
@@ -25,32 +18,37 @@ export default defineComponent({
   name: "FanLevelCard",
   props: {
     member: String,
-    lv: Number,
-    exp: Number,
   },
   setup(props) {
     const store = useStore();
-    const getLv = computed(() => store.getters.getLv(props.member));
-    const getExp = computed(() => store.getters.getExp(props.member));
-    const setLv = (event: { target: { value: string } }) => {
-      store.commit("setLv", {
-        member: props.member,
-        lv: Number(event.target.value),
-      });
-    };
-    const setExp = (event: { target: { value: string } }) => {
-      store.commit("setExp", {
-        member: props.member,
-        exp: Number(event.target.value),
-      });
-    };
-    const memberObj = Member;
+
+    const fanLevel = computed({
+      get() {
+        return store.getters.getLv(props.member);
+      },
+      set(newValue) {
+        store.commit("setLv", {
+          member: props.member,
+          lv: Number(newValue),
+        });
+      },
+    });
+    const exp = computed({
+      get() {
+        return store.getters.getExp(props.member);
+      },
+      set(newValue) {
+        store.commit("setExp", {
+          member: props.member,
+          exp: Number(newValue),
+        });
+      },
+    });
+    const memberName = Member[props.member as string].name;
     return {
-      getLv,
-      getExp,
-      setLv,
-      setExp,
-      memberObj,
+      fanLevel,
+      exp,
+      memberName,
     };
   },
 });
